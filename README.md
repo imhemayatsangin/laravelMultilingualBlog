@@ -1,0 +1,2 @@
+# laravelMultilingualBlog
+Laravel Multilingual Blog 

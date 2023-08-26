@@ -14,7 +14,8 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                    {{__('post.loggedin')}}
+                    {{-- {{trans('post.loggedin')}} --}}
                 </div>
             </div>
         </div>

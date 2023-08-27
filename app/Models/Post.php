@@ -41,6 +41,8 @@ class Post extends Model
 
     public function languages()
     {
-        return $this->belongsToMany(Language::class);
+        return $this->belongsToMany(Language::class)
+            ->withPivot('title', 'content', 'publish_date', 'publish_time', 'status')
+            ->withTimestamps();
     }
 }

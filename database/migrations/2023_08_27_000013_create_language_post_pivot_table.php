@@ -18,6 +18,8 @@ class CreateLanguagePostPivotTable extends Migration
             $table->date('publish_date')->nullable();
             $table->time('publish_time')->nullable();
             $table->boolean('status')->default(0)->nullable();
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 }

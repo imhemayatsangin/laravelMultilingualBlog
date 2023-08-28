@@ -8,6 +8,8 @@ use App\Models\Language;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use Symfony\Component\HttpFoundation\Response;
+
 
 class PostController extends Controller
 {
@@ -71,5 +73,16 @@ class PostController extends Controller
         $post->delete();
 
         return back();
+    }
+
+    public function storeCKEditorImages(Request $request)
+    {
+
+        $model         = new Post();
+        $model->id     = $request->input('crud_id', 0);
+        $model->exists = true;
+        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+
+        return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
 }

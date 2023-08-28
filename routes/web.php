@@ -28,7 +28,8 @@ Route::get('lang/{lang}', ['as' => 'lang.switch', 'uses' => 'App\Http\Controller
 
 // Route::resource('posts', 'PostController');
 Route::resource('/posts', App\Http\Controllers\PostController::class);
-
+// Route::post('posts/media', 'PostController@storeMedia')->name('posts.storeMedia');
+Route::post('posts/ckmedia', 'PostController@storeCKEditorImages')->name('posts.storeCKEditorImages');
 // Language
 
 // Route::resource('languages', 'LanguageController');

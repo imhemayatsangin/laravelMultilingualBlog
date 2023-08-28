@@ -17,3 +17,16 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+
+// Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', 'middleware' => ['auth:sanctum']], function () {
+//     // Post
+//     Route::post('posts/media', 'PostApiController@storeMedia')->name('posts.storeMedia');
+//     Route::apiResource('posts', 'PostApiController');
+
+//     // Language
+//     Route::apiResource('languages', 'LanguageApiController');
+
+
+// });

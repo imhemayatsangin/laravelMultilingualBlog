@@ -16,9 +16,17 @@
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.11.0/css/flag-icons.min.css"
   />
-
+  
+    <link href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
+ 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+  
+  
 </head>
 <body>
     <div id="app">
@@ -36,7 +44,7 @@
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
                             <a href="{{ route("posts.index") }}" class="nav-link {{ request()->is("posts") || request()->is("posts/*") ? "c-active" : "" }}">
-                                <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+                                <i class="fa-fw fas fa-book c-sidebar-nav-icon">
             
                                 </i>
                                 {{-- {{ trans('menu.post') }} --}}
@@ -45,7 +53,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="{{ route("languages.index") }}" class="nav-link {{ request()->is("languages") || request()->is("languages/*") ? "c-active" : "" }}">
-                                <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+                                <i class="fa-fw fas fa-language c-sidebar-nav-icon">
             
                                 </i>
                                 {{-- {{ trans('menu.language') }} --}}
@@ -114,5 +122,16 @@
             </div>
         </main>
     </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script src="https://cdn.ckeditor.com/ckeditor5/16.0.0/classic/ckeditor.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script>
+  
+    <script src="{{ asset('js/main.js') }}"></script>
+    @yield('scripts')
 </body>
 </html>

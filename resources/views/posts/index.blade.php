@@ -78,7 +78,10 @@
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
                                     </form>
-                         
+
+                                    <a class="btn btn-xs btn-success" href="#">
+                                        {{ trans('global.translate') }}
+                                    </a>
 
                             </td>
 

@@ -34,24 +34,17 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                            <a href="{{ route("posts.index") }}" class="nav-link {{ request()->is("posts") || request()->is("posts/*") ? "c-active" : "" }}">
+{{--                         
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("posts.index") }}" class="c-sidebar-nav-link {{ request()->is("posts") || request()->is("posts/*") ? "c-active" : "" }}">
                                 <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
             
                                 </i>
-                                {{-- {{ trans('menu.post') }} --}}
+                            
                                 Posts
                             </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route("languages.index") }}" class="nav-link {{ request()->is("languages") || request()->is("languages/*") ? "c-active" : "" }}">
-                                <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
-            
-                                </i>
-                                {{-- {{ trans('menu.language') }} --}}
-                                Languages
-                            </a>
-                        </li>
+                        </li> --}}
+                     
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -109,9 +102,7 @@
         </nav>
 
         <main class="py-4">
-            <div class="container">
             @yield('content')
-            </div>
         </main>
     </div>
 </body>

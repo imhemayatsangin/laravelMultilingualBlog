@@ -22,3 +22,14 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('lang/{lang}', ['as' => 'lang.switch', 'uses' => 'App\Http\Controllers\LanguageController@switchLang']);
+
+
+// Post
+
+// Route::resource('posts', 'PostController');
+Route::resource('/posts', App\Http\Controllers\PostController::class);
+
+// Language
+
+// Route::resource('languages', 'LanguageController');
+Route::resource('/languages', App\Http\Controllers\LanguageController::class);

@@ -90,6 +90,83 @@
                 </tbody>
             </table>
         </div>
+
+        <table class="table">
+            <thead>
+              <tr class="table-active">
+                <th width="10">
+                    @
+                </th>
+                <th>
+                    {{ trans('cruds.post.fields.id') }}
+                </th>
+                <th>
+                    {{ trans('cruds.post.fields.main_title') }}
+                </th>
+                <th>
+                    {{ trans('cruds.post.fields.user') }}
+                </th>
+                <th>
+                    {{ trans('cruds.post.fields.language') }}
+                </th>
+                <th>
+                   Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="table-default toggle-row">
+                <td class="toggle-btn"><strong>  <i class="fas fa-plus custom-icon"></i></strong></td>
+                <td>Data 2</td>
+                <td> Data 3</td>
+                <td> Data 4</td>
+                <td> Data 5</td>
+                <td> Data 6</td>
+              </tr>
+              <tr class="table-success sub-row ">
+                <th style="background-color: #ffffff;">&nbsp;</th>
+                <th>Language</th>
+                <th>Title</th>
+                <th>publish Date</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+              <tr class="table-info sub-row ">
+                <td style="background-color: #ffffff;">&nbsp;</td>
+                <td>Data 1</td>
+                <td>Data 2</td>
+                <td>Data 3</td>
+                <td>Data 4</td>
+                <td>Data 5</td>
+              </tr>
+              <!-- Add more rows with sub-rows here -->
+              <tr class="table-default toggle-row">
+                <td class="toggle-btn"><strong>  <i class="fas fa-plus custom-icon"></i></strong></td>
+                <td>Data 2</td>
+                <td> Data 3</td>
+                <td> Data 4</td>
+                <td> Data 5</td>
+                <td> Data 6</td>
+              </tr>
+              <tr class="table-success sub-row ">
+                <th style="background-color: #ffffff;">&nbsp;</th>
+                <th>Language</th>
+                <th>Title</th>
+                <th>publish Date</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+              <tr class="table-info sub-row ">
+                <th style="background-color: #ffffff;">&nbsp;</th>
+                <td>Data 1</td>
+                <td>Data 2</td>
+                <td>Data 3</td>
+                <td>Data 4</td>
+                <td>Data 5</td>
+              </tr>
+            </tbody>
+          </table>
+
     </div>
 </div>
 
@@ -98,5 +175,29 @@
 @endsection
 @section('scripts')
 @parent
-
+<script>
+    $(document).ready(function() {
+    
+        $(".sub-row").hide();
+    
+        $(".toggle-row").click(function() {
+            var clickedRow = $(this).closest("tr");
+            var subRows = clickedRow.nextUntil(".toggle-row");
+            var toggleBtn = $(this).find(".toggle-btn");
+    
+            // Close all previously opened rows
+            $(".sub-row").not(subRows).hide();
+            $(".toggle-row .toggle-btn").not(toggleBtn).html('<i class="fas fa-plus custom-icon"></i>');
+    
+            // Toggle visibility of the clicked row's sub-rows
+            subRows.toggle();
+        
+            if (subRows.is(":visible")) {
+                toggleBtn.html('<i class="fas fa-minus custom-icon"></i>');
+            } else {
+                toggleBtn.html('<i class="fas fa-plus custom-icon"></i>');
+            }
+        });
+    });
+    </script>
 @endsection

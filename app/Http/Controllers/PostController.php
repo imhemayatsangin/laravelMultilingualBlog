@@ -33,8 +33,29 @@ class PostController extends Controller
 
     public function store(StorePostRequest $request)
     {
+
+
+        $language = $request->input('languages');
+        $title = $request->input('title');
+        $content = $request->input('content');
+        $publish_date = $request->input('publish_date');
+        $publish_time = $request->input('publish_time');
+        $status =  $request->input('status');
+
+
+
+
+
+
         $post = Post::create($request->all());
-        $post->languages()->sync($request->input('languages', []));
+        if ($language != '') {
+            $post->languages()->attach($language, ['title' => $title, 'content' => $content, 'publish_date' => $publish_date, 'publish_time' => $publish_time, 'status' => $status]);
+        }
+
+
+
+
+
 
         return redirect()->route('posts.index');
     }

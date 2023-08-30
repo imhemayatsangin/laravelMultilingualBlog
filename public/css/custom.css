@@ -81,3 +81,14 @@ textarea {
     cursor: pointer; /* Change cursor to pointer on hover */
   }
 
+  .custom-btn {
+    font-size: 10px; /* Adjust the size as needed */
+    color: #dde5eb;
+    font-weight: bold;
+    border-radius: 50%; /* To make it rounded */
+    background-color: rgb(7, 107, 168);
+    padding: 10px; /* Adding padding for extra space around the icon */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Adding shadow */
+    cursor: pointer; /* Change cursor to pointer on hover */
+  }
+

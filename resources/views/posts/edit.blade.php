@@ -36,11 +36,11 @@
             </div>
             <div class="form-group">
                 <label for="languages">{{ trans('cruds.post.fields.language') }}</label>
-                <div style="padding-bottom: 4px">
+                {{-- <div style="padding-bottom: 4px">
                     <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                     <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                </div>
-                <select class="form-control select2 {{ $errors->has('languages') ? 'is-invalid' : '' }}" name="languages[]" id="languages" multiple>
+                </div> --}}
+                <select class="form-control select2 {{ $errors->has('languages') ? 'is-invalid' : '' }}" name="languages[]" id="languages" >
                     @foreach($languages as $id => $language)
                         <option value="{{ $id }}" {{ (in_array($id, old('languages', [])) || $post->languages->contains($id)) ? 'selected' : '' }}>{{ $language }}</option>
                     @endforeach

@@ -3,35 +3,30 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('global.create') }} {{ trans('cruds.post.title_singular') }}
+        {{ trans('global.translate') }} {{ trans('cruds.post.title_singular') }}
     </div>
-
+    
     <div class="card-body">
-        <form method="POST" action="{{ route("posts.store") }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route("posts.addtranslate", [$post->id])}}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="main_title">{{ trans('cruds.post.fields.main_title') }}</label>
-                <input class="form-control {{ $errors->has('main_title') ? 'is-invalid' : '' }}" type="text" name="main_title" id="main_title" value="{{ old('main_title', '') }}">
-                @if($errors->has('main_title'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('main_title') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.post.fields.main_title_helper') }}</span>
+
+{{-- @foreach($posts as $post) --}}
+
+{{ $post->main_title }}
+
+
+{{-- @endforeach --}}
+
+
+
+
+      
             </div>
             <div class="form-group">
                 <label for="user_id">{{ trans('cruds.post.fields.user') }}</label>
-                <select class="form-control select2 {{ $errors->has('user') ? 'is-invalid' : '' }}" name="user_id" id="user_id">
-                    @foreach($users as $id => $entry)
-                        <option value="{{ $id }}" {{ old('user_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('user'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('user') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.post.fields.user_helper') }}</span>
+                {{ $post->user->name ?? '' }}
             </div>
             <br>
             <div class="form-group">
@@ -41,7 +36,7 @@
                     <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
                 </div> --}}
                 <select class="form-control select2 {{ $errors->has('languages') ? 'is-invalid' : '' }}" name="languages[]" id="languages" >
-                    @foreach($languages as $id => $language)
+                    @foreach($availableLanguages as $id => $language)
                         <option value="{{ $id }}" {{ in_array($id, old('languages', [])) ? 'selected' : '' }}>{{ $language }}</option>
                     @endforeach
                 </select>

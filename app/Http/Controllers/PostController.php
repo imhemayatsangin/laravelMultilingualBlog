@@ -76,24 +76,44 @@ class PostController extends Controller
     {
         $post->update($request->all());
         $post->languages()->sync($request->input('languages', []));
-
         return redirect()->route('posts.index');
     }
 
     public function show(Post $post)
     {
-
-
-
         return view('posts.show', compact('post'));
     }
 
     public function destroy(Post $post)
     {
-
         $post->delete();
-
         return back();
+    }
+
+    public function translate($id)
+    {
+
+        $post = Post::with(['user', 'languages'])->where('id', $id)->first();
+
+
+        // Retrieve the languages associated with the given post
+        $translatedLanguages = Post::findOrFail($id)->languages->pluck('id');
+
+        // Retrieve all languages except the ones associated with the post which is already translated.
+        // $availableLanguages = Language::whereNotIn('id', $translatedLanguages)->get();
+
+        $availableLanguages = Language::whereNotIn('id', $translatedLanguages)->pluck('name', 'id');
+
+
+
+        // dd($posts);
+        return view('posts.translate', compact('post', 'availableLanguages'));
+    }
+
+    public function addtranslation($post_id)
+    {
+
+        dd($post_id);
     }
 
     public function storeCKEditorImages(Request $request)

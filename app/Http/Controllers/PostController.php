@@ -8,6 +8,7 @@ use App\Models\Language;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Http\Requests\StoreTransPostRequest;
 use Symfony\Component\HttpFoundation\Response;
 
 
@@ -41,11 +42,6 @@ class PostController extends Controller
         $publish_date = $request->input('publish_date');
         $publish_time = $request->input('publish_time');
         $status =  $request->input('status');
-
-
-
-
-
 
         $post = Post::create($request->all());
         if ($language != '') {
@@ -110,10 +106,30 @@ class PostController extends Controller
         return view('posts.translate', compact('post', 'availableLanguages'));
     }
 
-    public function addtranslation($post_id)
+    public function addtranslation(StoreTransPostRequest $request)
     {
 
-        dd($post_id);
+        $post_id = $request->input('post_id');
+        $language = $request->input('languages');
+        $title = $request->input('title');
+        $content = $request->input('content');
+        $publish_date = $request->input('publish_date');
+        $publish_time = $request->input('publish_time');
+        $status =  $request->input('status');
+
+        $post = Post::where('id', $post_id)->first();
+
+
+
+        if ($language != '') {
+            $post->languages()->attach($language, ['title' => $title, 'content' => $content, 'publish_date' => $publish_date, 'publish_time' => $publish_time, 'status' => $status]);
+        }
+
+
+
+        $posts = Post::with(['user', 'languages'])->get();
+
+        return view('posts.index', compact('posts'));
     }
 
     public function storeCKEditorImages(Request $request)

@@ -7,7 +7,7 @@
     </div>
     
     <div class="card-body">
-        <form method="POST" action="{{ route("posts.addtranslate", [$post->id])}}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route("posts.addtranslate")}}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="main_title">{{ trans('cruds.post.fields.main_title') }}</label>
@@ -28,6 +28,8 @@
                 <label for="user_id">{{ trans('cruds.post.fields.user') }}</label>
                 {{ $post->user->name ?? '' }}
             </div>
+
+            <input class="form-control" type="text" name="post_id" id="post_id" value="{{$post->id}}">
             <br>
             <div class="form-group">
                 <label for="languages">{{ trans('cruds.post.fields.language') }}</label>

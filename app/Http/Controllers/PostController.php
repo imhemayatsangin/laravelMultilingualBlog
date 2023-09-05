@@ -6,9 +6,11 @@ use App\Models\Post;
 use App\Models\User;
 use App\Models\Language;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Http\Requests\StoreTransPostRequest;
+use App\Http\Requests\UpdateTransPostRequest;
 use Symfony\Component\HttpFoundation\Response;
 
 
@@ -71,7 +73,7 @@ class PostController extends Controller
     public function update(UpdatePostRequest $request, Post $post)
     {
         $post->update($request->all());
-        $post->languages()->sync($request->input('languages', []));
+        // $post->languages()->sync($request->input('languages', []));
         return redirect()->route('posts.index');
     }
 
@@ -141,5 +143,102 @@ class PostController extends Controller
         $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
+    }
+
+    public function showtrans($post_id, $lang_id)
+    {
+
+        // Retrieve the data from the language_post table where post_id and language_id match
+        $data = DB::table('language_post')
+            ->where('post_id', $post_id)
+            ->where('language_id', $lang_id)
+            ->join('posts', 'language_post.post_id', '=', 'posts.id')
+            ->join('languages', 'language_post.language_id', '=', 'languages.id')
+            ->select('posts.main_title', 'languages.name', 'language_post.title', 'language_post.content', 'language_post.publish_date', 'language_post.publish_time', 'language_post.status')
+            ->first();
+
+        // dd($posts);
+        return view('posts.showtrans', compact('data'));
+    }
+    public function edittrans($post_id, $lang_id)
+    {
+
+        $post = Post::with(['user', 'languages'])->findOrFail($post_id);
+
+        // Retrieve the language_post entries for the specified post_id
+        $translatedLanguages = DB::table('language_post')
+            ->where('post_id', $post_id)
+            ->pluck('language_id');
+
+        // Remove the currently edited language from the list of translated languages
+        $translatedLanguages = $translatedLanguages->reject(function ($language) use ($lang_id) {
+            return $language == $lang_id;
+        });
+
+        // Retrieve all available languages that are not in the list of translated languages
+        $availableLanguages = Language::whereNotIn('id', $translatedLanguages)->pluck('name', 'id');
+
+        // If the selected language is not in available languages, add it
+        if (!$availableLanguages->has($lang_id)) {
+            $availableLanguages->put($lang_id, $post->languages->find($lang_id)->name);
+        }
+
+
+
+        // Retrieve the data from the language_post table where post_id and language_id match
+        $data = DB::table('language_post')
+            ->where('post_id', $post_id)
+            ->where('language_id', $lang_id)
+            ->join('posts', 'language_post.post_id', '=', 'posts.id')
+            ->join('languages', 'language_post.language_id', '=', 'languages.id')
+            ->select('language_post.post_id', 'language_post.language_id', 'posts.main_title', 'languages.name', 'language_post.title', 'language_post.content', 'language_post.publish_date', 'language_post.publish_time', 'language_post.status')
+            ->first();
+
+        // dd($posts);
+        return view('posts.edittrans', compact('data', 'availableLanguages'));
+    }
+
+    public function updateTrans(UpdateTransPostRequest $request)
+    {
+        $post_id = $request->input('post_id');
+        $language_id = $request->input('language_id'); //this id is when we sending language id for edit to find a record with this id here.
+
+        $lang_id = $request->input('lang_id'); // this id is select option language id
+        $title = $request->input('title');
+        $content = $request->input('content');
+        $publish_date = $request->input('publish_date');
+        $publish_time = $request->input('publish_time');
+        $status = $request->input('status');
+
+        // Find the specific language_post record to update
+        $languagePost = DB::table('language_post')
+            ->where('post_id', $post_id)
+            ->where('language_id', $language_id)
+            ->first();
+
+        // Check if the record exists
+        if (!$languagePost) {
+            return redirect()->route('posts.edittrans', [$post_id, $language_id])
+                ->with('success', 'Translation not updated.');
+        }
+
+        if ($languagePost) {
+
+            // Update the language_post record with the new values
+            DB::table('language_post')
+                ->where('post_id', $post_id)
+                ->where('language_id', $language_id)
+                ->update([
+                    'language_id' => $lang_id,
+                    'title' => $title,
+                    'content' => $content,
+                    'publish_date' => $publish_date,
+                    'publish_time' => $publish_time,
+                    'status' => $status,
+                ]);
+        }
+        // Redirect back to the edit page or any other  page
+        return redirect()->route('posts.edittrans', [$post_id, $lang_id])
+            ->with('success', 'Translation updated successfully');
     }
 }

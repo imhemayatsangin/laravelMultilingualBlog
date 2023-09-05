@@ -23,7 +23,7 @@
             <thead>
               <tr class="table-active">
                 <th width="10">
-                    @
+                    Translations
                 </th>
                 <th>
                     {{ trans('cruds.post.fields.id') }}
@@ -105,10 +105,10 @@
                 <td>{{ $item->pivot->publish_date }}</td>
                 <td>{{ $item->pivot->status?"Published":"un-published" }}</td>
                 <td>
-                    <a class="btn btn-xs " href="{{ route('posts.show', $post->id) }}">
+                    <a class="btn btn-xs " href="{{ route('posts.showtrans', ['id' => $post->id, 'langid' => $item->pivot->language_id]) }}">
                         <strong>  <i class="fas fa-eye custom-btn"></i></strong>
                     </a>
-                    <a class="btn btn-xs" href="{{ route('posts.edit', $post->id) }}">
+                    <a class="btn btn-xs" href="{{ route('posts.edittrans', ['id' => $post->id, 'langid' => $item->pivot->language_id]) }}">
                         <strong>  <i class="fas fa-edit custom-btn"></i></strong>
                     </a>
                     <form action="{{ route('posts.destroy', $post->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">

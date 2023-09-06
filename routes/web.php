@@ -31,12 +31,11 @@ Route::get('/posts-translate/{id}', [App\Http\Controllers\PostController::class,
 Route::post('/posts-addtranslation', [App\Http\Controllers\PostController::class, 'addtranslation'])->name('posts.addtranslate');
 
 
-
+// translation rows routes
 Route::get('/posts/show-trans/{id},{langid}', [App\Http\Controllers\PostController::class, 'showtrans'])->name('posts.showtrans');
 Route::get('/posts/edit-trans/{id},{langid}', [App\Http\Controllers\PostController::class, 'edittrans'])->name('posts.edittrans');
 Route::post('/posts-updatetrans', [App\Http\Controllers\PostController::class, 'updatetrans'])->name('posts.updatetrans');
-// Route::get('/posts/delete-trans/{id}', [App\Http\Controllers\PostController::class, 'deletetrans'])->name('posts.deletetrans');
-// Route::post('/posts/delete-trans/{id}', [App\Http\Controllers\PostController::class, 'updatetrans'])->name('posts.updatetrans');
+Route::delete('/posts/delete-trans/{id},{langid}', [App\Http\Controllers\PostController::class, 'deletetrans'])->name('posts.deletetrans');
 
 // Route::resource('posts', 'PostController');
 Route::resource('/posts', App\Http\Controllers\PostController::class);

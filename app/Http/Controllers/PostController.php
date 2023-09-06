@@ -241,4 +241,29 @@ class PostController extends Controller
         return redirect()->route('posts.edittrans', [$post_id, $lang_id])
             ->with('success', 'Translation updated successfully');
     }
+
+    public function deleteTrans($post_id, $lang_id)
+    {
+        // Retrieve the specific language_post record to delete
+        $languagePost = DB::table('language_post')
+            ->where('post_id', $post_id)
+            ->where('language_id', $lang_id)
+            ->first();
+
+        // Check if the record exists
+        if (!$languagePost) {
+            $posts = Post::with(['user', 'languages'])->get();
+            return view('posts.index', compact('posts'))->with('error', 'Translation not found');
+        }
+
+        // Delete the language_post record
+        DB::table('language_post')
+            ->where('post_id', $post_id)
+            ->where('language_id', $lang_id)
+            ->delete();
+
+
+        $posts = Post::with(['user', 'languages'])->get();
+        return view('posts.index', compact('posts'))->with('success', 'Translation deleted successfully');
+    }
 }

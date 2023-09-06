@@ -111,7 +111,7 @@
                     <a class="btn btn-xs" href="{{ route('posts.edittrans', ['id' => $post->id, 'langid' => $item->pivot->language_id]) }}">
                         <strong>  <i class="fas fa-edit custom-btn"></i></strong>
                     </a>
-                    <form action="{{ route('posts.destroy', $post->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                    <form action="{{ route('posts.deletetrans', ['id' => $post->id, 'langid' => $item->pivot->language_id]) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                         <input type="hidden" name="_method" value="DELETE">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <button type="submit" class="btn btn-xs "><strong>  <i class='fas fa-trash custom-btn'></i></strong></button>

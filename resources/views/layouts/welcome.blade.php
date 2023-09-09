@@ -8,7 +8,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-
+  <!-- Favicon-->
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
@@ -44,6 +45,14 @@
                                 Posts
                             </a>
                         </li> --}}
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                                <li class="nav-item"><a class="nav-link" href="#">{{trans('menu.Home')}}</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#!">{{trans('menu.About')}}</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#!">{{trans('menu.Contact')}}</a></li>
+                                <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">{{trans('menu.Blog')}}</a></li>
+                            </ul>
+                        </div>
                      
                     </ul>
 
@@ -68,13 +77,13 @@
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link" href="{{ route('login') }}">{{ __('menu.Login') }}</a>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('menu.Register') }}</a>
                                 </li>
                             @endif
                         @else
@@ -87,7 +96,7 @@
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        {{ __('menu.Logout') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -104,6 +113,10 @@
         <main class="py-4">
             @yield('content')
         </main>
+             <!-- Footer-->
+             <footer class="py-5 bg-dark">
+                <div class="container"><p class="m-0 text-center text-white">{{trans('welcomepage.Copyright')}} &copy; {{trans('welcomepage.Website')}}</p></div>
+            </footer>
     </div>
 </body>
 </html>

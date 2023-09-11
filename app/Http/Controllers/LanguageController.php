@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
+use App\Models\Language;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
-
-use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyLanguageRequest;
 use App\Http\Requests\StoreLanguageRequest;
+
+
 use App\Http\Requests\UpdateLanguageRequest;
-use App\Models\Language;
-
-
 use Symfony\Component\HttpFoundation\Response;
+use App\Http\Requests\MassDestroyLanguageRequest;
 
 
 
@@ -28,6 +30,7 @@ class LanguageController extends Controller
         }
         return Redirect::back();
     }
+
 
     public function index()
     {

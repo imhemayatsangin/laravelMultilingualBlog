@@ -3,13 +3,13 @@
 return [
 
 
-    'Home'     => 'Home',
-    'About'    => 'About',
-    'Contact'  => 'Contact',
-    'Blog'     => 'Blog',
-    'Login'    => 'Login',
-    'Register' => 'Register',
-    'Logout' => 'خارجیدل',
+    'Home'     => 'بيت',
+    'About'    => 'مقدمة',
+    'Contact'  => 'اتصال',
+    'Blog'     => 'مدونة',
+    'Login'    => 'تسجيل الدخول',
+    'Register' => 'يسجل',
+    'Logout' => 'تسجيل خروج',
 
 
 

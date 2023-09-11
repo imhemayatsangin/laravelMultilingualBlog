@@ -3,13 +3,13 @@
 return [
 
 
-    'Home'     => 'Home',
-    'About'    => 'About',
-    'Contact'  => 'Contact',
-    'Blog'     => 'Blog',
-    'Login'    => 'Login',
-    'Register' => 'Register',
-    'Logout'   => 'Logout',
+    'Home'     => 'خانه',
+    'About'    => 'در باره ما',
+    'Contact'  => 'تماس',
+    'Blog'     => 'بلاګ',
+    'Login'    => 'وارد شدن',
+    'Register' => 'ثبت نام',
+    'Logout'   => 'خروج',
 
 
 

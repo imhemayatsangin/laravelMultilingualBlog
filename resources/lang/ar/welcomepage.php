@@ -3,8 +3,8 @@
 return [
 
 
-    'Copyright'     => 'Copyright',
-    'Website'     => 'ویب سایټ شما ۲۰۲۳',
+    'Copyright'     => 'حقوق ملكية',
+    'Website'     => '  موقع الويب الخاص بك ۲۰۲۳',
 
 
 

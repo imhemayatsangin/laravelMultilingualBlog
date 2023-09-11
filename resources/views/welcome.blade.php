@@ -2,13 +2,20 @@
 
 @section('content')
 <div class="container">
- @foreach($posts as $post)
+ {{-- @foreach($posts as $post)
 
 {{ $post->main_title }}
 <p>Published By: 
 {{ $post->user->name }}
 </p>
- @endforeach
+ @endforeach --}}
+
+
+ @foreach ($posts as $post)
+    <h2>{{ $post->title }}</h2>
+    <p>{{ $post->content }}</p>
+    <!-- Display other post information as needed -->
+@endforeach
 
 
     <!-- Page content-->

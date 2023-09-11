@@ -39,7 +39,7 @@ To download and set up the project, follow these steps:<br>
    DB_PASSWORD=your_database_password</code><br>
 
 7. Run the database migrations to create the necessary tables:<br>
-   <code>php artisan migrate</code><br>
+   <code>php artisan migrate --seed</code><br>
 
 8. Install the JavaScript dependencies using NPM:<br>
    <code>npm install</code><br>
@@ -48,6 +48,9 @@ To download and set up the project, follow these steps:<br>
 
 To run the project locally, execute the following command:<br>
 <code>php artisan serve<br></code>
+
+<code>email: admin@blog.com<br> password: password <br></code>
+
 This will start a development server at http://localhost:8000, and you can access the application in your web browser.<br>
 
 # Enjoy the show.<br>

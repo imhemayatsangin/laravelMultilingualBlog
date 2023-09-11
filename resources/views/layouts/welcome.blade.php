@@ -17,7 +17,14 @@
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.11.0/css/flag-icons.min.css"
   />
+    <!-- Include the RTL CSS file for RTL languages -->
+    @if (in_array(App::getLocale(), ['ar', 'pa', 'da']))
+    <link href="{{ asset('css/bootstrap-rtl.css') }}" rel="stylesheet" />
+    @else
+     <!-- Include the LTR CSS file for other languages if you have seperate css -->
 
+
+    @endif
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>

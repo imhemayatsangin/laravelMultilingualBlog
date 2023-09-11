@@ -49,7 +49,7 @@ To download and set up the project, follow these steps:<br>
 To run the project locally, execute the following command:<br>
 <code>php artisan serve<br></code>
 
-<code>email: admin@blog.com<br> </code>
+<code>email: admin@blog.com<br> </code><br>
 <code>password: password<br> </code>
 
 This will start a development server at http://localhost:8000, and you can access the application in your web browser.<br>

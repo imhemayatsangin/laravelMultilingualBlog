@@ -19,7 +19,7 @@
   />
     <!-- Include the RTL CSS file for RTL languages -->
     @if (in_array(App::getLocale(), ['ar', 'pa', 'da']))
-    <link href="{{ asset('css/bootstrap-rtl.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/rtl.css') }}" rel="stylesheet" />
     @else
      <!-- Include the LTR CSS file for other languages if you have seperate css -->
 

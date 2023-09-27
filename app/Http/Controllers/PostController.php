@@ -36,8 +36,6 @@ class PostController extends Controller
 
     public function store(StorePostRequest $request)
     {
-
-
         $language = $request->input('languages');
         $title = $request->input('title');
         $content = $request->input('content');
@@ -45,16 +43,49 @@ class PostController extends Controller
         $publish_time = $request->input('publish_time');
         $status =  $request->input('status');
 
-        $post = Post::create($request->all());
-        if ($language != '') {
-            $post->languages()->attach($language, ['title' => $title, 'content' => $content, 'publish_date' => $publish_date, 'publish_time' => $publish_time, 'status' => $status]);
+
+        // Initialize flags to track success in both parts
+        $postSuccess = false;
+        $languagesSuccess = false;
+        // Start a database transaction
+        DB::beginTransaction();
+        try {
+            // 1. Create a new post
+            $post = Post::create($request->all());
+            // Set the flag for post success
+            $postSuccess = true;
+            // 2. Attach languages to the post
+            if ($language != '') {
+                $post->languages()->attach($language, [
+                    'title' => $title,
+                    'content' => $content,
+                    'publish_date' => $publish_date,
+                    'publish_time' => $publish_time,
+                    'status' => $status,
+                ]);
+                // Set the flag for languages success
+                $languagesSuccess = true;
+            }
+            // If both parts were successful, commit the transaction
+            if ($postSuccess && $languagesSuccess) {
+                DB::commit();
+                return redirect()->route('posts.index');
+            } else {
+                // If either part failed, rollback the transaction
+                DB::rollback();
+                return back()->with('error', 'An error occurred while saving the data.');
+            }
+        } catch (\Exception $e) {
+            // Something went wrong, rollback the transaction and handle the exception
+            DB::rollback();
+            // You can log or handle the exception here
+            // For example, you can return an error message to the user
+            return back()->with('error', 'An error occurred while saving the data.');
         }
-
-
-
-
-
-
+        // $post = Post::create($request->all());
+        // if ($language != '') {
+        //     $post->languages()->attach($language, ['title' => $title, 'content' => $content, 'publish_date' => $publish_date, 'publish_time' => $publish_time, 'status1' => $status]);
+        // }
         return redirect()->route('posts.index');
     }
 

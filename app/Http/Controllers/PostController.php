@@ -6,11 +6,13 @@ use App\Models\Post;
 use App\Models\User;
 use App\Models\Language;
 use Illuminate\Http\Request;
+use App\Helpers\TransactionHelper;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Http\Requests\StoreTransPostRequest;
 use App\Http\Requests\UpdateTransPostRequest;
+use App\Http\Middleware\TransactionMiddleware;
 use Symfony\Component\HttpFoundation\Response;
 
 
@@ -36,6 +38,8 @@ class PostController extends Controller
 
     public function store(StorePostRequest $request)
     {
+        //  $this->middleware(TransactionMiddleware::class);
+
         $language = $request->input('languages');
         $title = $request->input('title');
         $content = $request->input('content');
@@ -43,17 +47,18 @@ class PostController extends Controller
         $publish_time = $request->input('publish_time');
         $status =  $request->input('status');
 
+        // Use the TransactionHelper to execute the transaction
+        $result = TransactionHelper::executeTransaction(function () use ($request, $language, $title, $content, $publish_date, $publish_time, $status) {
+            // Initialize flags to track success in both parts
+            $postSuccess = false;
+            $languagesSuccess = false;
 
-        // Initialize flags to track success in both parts
-        $postSuccess = false;
-        $languagesSuccess = false;
-        // Start a database transaction
-        DB::beginTransaction();
-        try {
             // 1. Create a new post
             $post = Post::create($request->all());
+
             // Set the flag for post success
             $postSuccess = true;
+
             // 2. Attach languages to the post
             if ($language != '') {
                 $post->languages()->attach($language, [
@@ -63,30 +68,28 @@ class PostController extends Controller
                     'publish_time' => $publish_time,
                     'status' => $status,
                 ]);
+
                 // Set the flag for languages success
                 $languagesSuccess = true;
             }
-            // If both parts were successful, commit the transaction
-            if ($postSuccess && $languagesSuccess) {
-                DB::commit();
-                return redirect()->route('posts.index');
-            } else {
-                // If either part failed, rollback the transaction
-                DB::rollback();
-                return back()->with('error', 'An error occurred while saving the data.');
-            }
-        } catch (\Exception $e) {
-            // Something went wrong, rollback the transaction and handle the exception
-            DB::rollback();
-            // You can log or handle the exception here
-            // For example, you can return an error message to the user
+
+            // Return an array with the post and success flags
+            return ['post' => $post, 'postSuccess' => $postSuccess, 'languagesSuccess' => $languagesSuccess];
+        });
+
+        // Check the success flags from the result
+        $postSuccess = $result['postSuccess'];
+        $languagesSuccess = $result['languagesSuccess'];
+
+        if ($postSuccess && $languagesSuccess) {
+            // Both parts were successful
+            return redirect()->route('posts.index');
+        } else {
+            // Handle the case where the transaction failed
+            // Rollback any post-specific or languages-specific changes if necessary
             return back()->with('error', 'An error occurred while saving the data.');
         }
-        // $post = Post::create($request->all());
-        // if ($language != '') {
-        //     $post->languages()->attach($language, ['title' => $title, 'content' => $content, 'publish_date' => $publish_date, 'publish_time' => $publish_time, 'status1' => $status]);
-        // }
-        return redirect()->route('posts.index');
+        // return redirect()->route('posts.index');
     }
 
     public function edit(Post $post)
@@ -103,6 +106,7 @@ class PostController extends Controller
 
     public function update(UpdatePostRequest $request, Post $post)
     {
+        $this->middleware(TransactionMiddleware::class);
         $post->update($request->all());
         // $post->languages()->sync($request->input('languages', []));
         return redirect()->route('posts.index');

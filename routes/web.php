@@ -36,8 +36,9 @@ Route::get('/posts/edit-trans/{id},{langid}', [App\Http\Controllers\PostControll
 Route::post('/posts-updatetrans', [App\Http\Controllers\PostController::class, 'updatetrans'])->name('posts.updatetrans');
 Route::delete('/posts/delete-trans/{id},{langid}', [App\Http\Controllers\PostController::class, 'deletetrans'])->name('posts.deletetrans');
 
-// Route::resource('posts', 'PostController');
 Route::resource('/posts', App\Http\Controllers\PostController::class);
+
+
 
 
 // Route::post('posts/media', 'PostController@storeMedia')->name('posts.storeMedia');

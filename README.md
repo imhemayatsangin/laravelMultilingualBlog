@@ -43,7 +43,25 @@ To download and set up the project, follow these steps:<br>
 
 8. Install the JavaScript dependencies using NPM:<br>
    <code>npm install</code><br>
+9. Go to App/Providers/LanguageServiceProvider.php file and uncomment the following code inside the boot function.
+    <code>
+       public function boot(): void
+    {
+        // $languages = DB::table('languages')->get();
 
+        // $config = [];
+
+        // foreach ($languages as $language) {
+        //     $config[$language->code] = [
+        //         'display' => $language->name,
+        //         'flag-icon' => $language->icon,
+        //     ];
+        // }
+
+        // config(['languages' => $config]);
+    }
+   </code>
+   <br>
 # Usage<br>
 
 To run the project locally, execute the following command:<br>

@@ -20,17 +20,17 @@ class LanguageServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $languages = DB::table('languages')->get();
+        // $languages = DB::table('languages')->get();
 
-        $config = [];
+        // $config = [];
 
-        foreach ($languages as $language) {
-            $config[$language->code] = [
-                'display' => $language->name,
-                'flag-icon' => $language->icon,
-            ];
-        }
+        // foreach ($languages as $language) {
+        //     $config[$language->code] = [
+        //         'display' => $language->name,
+        //         'flag-icon' => $language->icon,
+        //     ];
+        // }
 
-        config(['languages' => $config]);
+        // config(['languages' => $config]);
     }
 }

@@ -25,7 +25,8 @@ To download and set up the project, follow these steps:<br>
    <code>composer install</code><br>
 
 4. Create a copy of the .env.example file and name it .env:<br>
-   <code> cp .env.example .env</code><br>
+   <code> cp .env.example .env</code><br> Or<br>
+   <code> copy .env.example .env</code><br>
 
 5. Generate an application key:<br>
    <code> php artisan key:generate</code><br>
